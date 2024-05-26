@@ -123,39 +123,6 @@ impl MyDevice {
         }
     }
 
-    fn net_async_naive_executor(&mut self, _request: &IoControlRequest) -> Result<u32, Error> {
-        //mymain();
-        let start = Instant::now();
-
-        for i in 0..10 {
-            run_future(Box::pin(async_request(
-                self.berk.clone(),
-                self.berk_status.clone(),
-            )))?;
-        }
-        //mymain();
-        let duration2 = start.elapsed();
-        let mut vec = vec![Box::pin(async_request(
-            self.berk.clone(),
-            self.berk_status.clone(),
-        ))];
-        for i in 1..500 {
-            vec.push(Box::pin(async_request(
-                self.berk.clone(),
-                self.berk_status.clone(),
-            )));
-        }
-        let start = Instant::now();
-
-        run_futures(vec);
-
-        let duration = start.elapsed();
-        println!("[10++++][singlenetasync elapsed: {:?}]", duration2);
-        println!("[500++][netasync elapsed: {:?}]", duration);
-        //run_future(simple5());
-        Ok(0)
-    }
-
     fn net_async_executor(&mut self, _request: &IoControlRequest) -> Result<u32, Error> {
         let berk = self.berk.clone();
         let berk_status = self.berk_status.clone();

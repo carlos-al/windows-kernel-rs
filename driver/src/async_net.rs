@@ -14,30 +14,6 @@ use windows_kernel::asynk::executor::naive::{run_future, Yield};
 use windows_kernel::asynk::time::{sleep_until, timeout};
 
 // Basic timer primitives
-pub fn mymain() {
-    let fut = massimpletodavia();
-    let out = run_future(join!(fut, massimpletodavia()));
-    println!("[massimpletodavia]{:?}", out);
-
-    for _ in 0..1 {
-        let fut = simple();
-        let out = run_future(fut);
-        println!("[simple]{out}");
-    }
-
-    let fut = simple2();
-    let out = run_future(fut);
-    println!("[simple2]{out}");
-
-    let fut = simple3();
-    let out = run_future(fut);
-    println!("[simple3]{out}");
-
-    let fut = simple4();
-    let out = run_future(fut);
-    println!("[simple4]{out}");
-}
-
 async fn massimpletodavia() -> i32 {
     let inner = Yield { yielded: false };
     inner.await;
