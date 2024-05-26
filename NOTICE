@@ -1,0 +1,18 @@
+This project includes code from libraries licensed under the Apache License 2.0 and the MIT License.
+
+The following components are licensed under the Apache License 2.0:
+- windows-kernel/src/sync/scc (https://github.com/wvwwvwwv/scalable-concurrent-containers & https://github.com/wvwwvwwv/scalable-delayed-dealloc)
+  See windows-kernel/src/sync/scc/LICENSE for details.
+
+Any other component is licensed under the MIT License.
+This includes, but is not limited to, the following work:
+- windows-kernel/src/sync/dashmap (https://github.com/xacrimon/dashmap)
+- windows-kernel/src/sync/parking_lot(https://github.com/Amanieu/parking_lot)
+- windows-kernel/src/sync/thread_local (https://github.com/Amanieu/thread_local-rs)
+- windows-kernel/src/sync/mpmc (https://github.com/rust-lang/rust)
+- windows-kernel/src/sync/mpsc (https://github.com/rust-lang/rust)
+- windows-kernel-build (https://github.com/StephanvanSchaik/windows-kernel-rs)
+- windows-kernel-sys (https://github.com/StephanvanSchaik/windows-kernel-rs)
+- winioctl (https://github.com/StephanvanSchaik/windows-kernel-rs)
+
+

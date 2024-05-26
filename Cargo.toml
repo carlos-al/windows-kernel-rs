@@ -1,0 +1,23 @@
+[workspace]
+resolver = "2"
+members = [
+    "driver",
+    "common",
+    "windows-kernel-sys",
+    "windows-kernel-build",
+    "windows-kernel",
+    "winioctl",
+]
+[profile.dev]
+panic = "abort"
+opt-level = "z"
+
+
+
+[profile.release]
+panic = "abort"
+strip = true
+opt-level = "z"
+codegen-units = 1
+lto = true
+

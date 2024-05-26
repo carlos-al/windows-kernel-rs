@@ -1,0 +1,52 @@
+#MIT License
+#
+#Copyright (c) 2021 S.J.R. van Schaik
+#
+#Permission is hereby granted, free of charge, to any person obtaining a copy
+#of this software and associated documentation files (the "Software"), to deal
+#in the Software without restriction, including without limitation the rights
+#to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#copies of the Software, and to permit persons to whom the Software is
+#furnished to do so, subject to the following conditions:
+#
+#The above copyright notice and this permission notice shall be included in all
+#copies or substantial portions of the Software.
+#
+#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#SOFTWARE.
+[env.development]
+TARGET_PATH = "../target/x86_64-pc-windows-msvc/debug"
+
+[env.production]
+TARGET_PATH = "../target/x86_64-pc-windows-msvc/release"
+BUILD_RELEASE = "--release"
+
+[env]
+VC_BUILD_DIR = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat"
+
+
+[tasks.build-driver]
+script = '''
+cargo b %BUILD_FLAGS%
+'''
+
+[tasks.sign]
+dependencies = ["build-driver", "rename"]
+script = '''
+call "%VC_BUILD_DIR%"
+cd %TARGET_PATH%
+if not exist DriverCertificate.cer ( makecert -r -pe -ss PrivateCertStore -n CN=DriverCertificate DriverCertificate.cer ) else ( echo Certificate already exists. )
+"signtool" sign /a /v /s PrivateCertStore /n DriverCertificate /fd certHash /t http://timestamp.digicert.com driver.sys
+'''
+
+[tasks.rename]
+ignore_errors = true
+script = '''
+cd %TARGET_PATH%
+rename driver.dll driver.sys
+'''
