@@ -26,8 +26,7 @@
 - Build & Sign:
 
 
-       cargo install cargo-make  
-       rustup default nightly  
+       cargo install cargo-make    
        cargo make sign
 
 Important Note: This project was last built and tested with rustc 1.80.0-nightly (1ba35e9bb 2024-05-25). Newer nightly versions might have changes that could cause compilation errors.
