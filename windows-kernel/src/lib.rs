@@ -146,6 +146,11 @@ macro_rules! kernel_module {
         pub unsafe extern "C" fn driver_exit(driver: *mut $crate::DRIVER_OBJECT) {
             let driver = unsafe { Driver::from_raw(driver) };
 
+            let signal = $crate::asynk::executor::get_executor().signal();
+            let notifier = $crate::asynk::executor::get_executor().notifier();
+            signal.store(true, Release);
+            notifier.wake_by_ref();
+
             {
                 $crate::asynk::executor::deinit_event_map();
             }
